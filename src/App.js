@@ -5,7 +5,7 @@ import TodoList from './components/TodoList';
 
 function createBulkTodos(){
   const array = [];
-  for(let i = 1; i <= 2500; i++){
+  for(let i = 1; i <= 25; i++){
     array.push({
       id: i,
       text: `할 일 ${i}`,
@@ -19,7 +19,7 @@ function App() {
 
   const [todos, setTodos] = useState(createBulkTodos);
 
-  const nextId = useRef(2501)
+  const nextId = useRef(26)
 
   const onInsert = useCallback(
     text => {
@@ -27,27 +27,24 @@ function App() {
         id: nextId.current,
         text, checked: false
       }
-      setTodos(todos.concat(todo));
+      setTodos( todos => todos.concat(todo));
       nextId.current += 1;
-    },
-    [todos],
+    }, []
   )
 
   const onRemove = useCallback(
     id => {
-      setTodos(todos.filter(todo => todo.id !== id ));
-    },
-    [todos]
+      setTodos( todos => todos.filter(todo => todo.id !== id ));
+    }, []
   ) 
   const onToggle = useCallback(
     id => {
-      setTodos(
+      setTodos( todos =>
         todos.map(todo => 
           todo.id === id ? { ...todo, checked: !todo.checked} : todo  
         )
       )
-    },
-    [todos]
+    }, []
   )
   return (
     <TodoTemplate>
